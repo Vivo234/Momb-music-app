@@ -1,0 +1,96 @@
+// Creating a song class
+class Song {
+  constructor(title, artist, album, duration, url) {
+    this.title = title;
+    this.artist = artist;
+    this.album = album;
+    this.duration = duration;
+    this.url = url;
+  }
+}
+
+// Creating a playlist class
+class Playlist {
+  constructor(name, songs) {
+    this.name = name;
+    this.songs = songs;
+  }
+
+  // Method to add a new song to the playlist
+  addSong(song) {
+    this.songs.push(song);
+  }
+
+  // Method to remove a song from the playlist
+  removeSong(song) {
+    const index = this.songs.indexOf(song);
+    if (index !== -1) {
+      this.songs.splice(index, 1);
+    }
+  }
+}
+
+// Creating a music player class
+class MusicPlayer {
+  constructor(playlist) {
+    this.playlist = playlist;
+    this.currentSongIndex = 0;
+    this.isPlaying = false;
+    this.currentSong = this.playlist.songs[this.currentSongIndex];
+  }
+
+  // Method to play the current song
+  play() {
+    this.isPlaying = true;
+    console.log(`Now playing ${this.currentSong.title} by ${this.currentSong.artist}`);
+  }
+
+  // Method to pause the current song
+  pause() {
+    this.isPlaying = false;
+    console.log(`Paused ${this.currentSong.title}`);
+  }
+
+  // Method to skip to the next song in the playlist
+  next() {
+    if (this.currentSongIndex === this.playlist.songs.length - 1) {
+      console.log(`End of playlist reached`);
+      this.stop();
+    } else {
+      this.currentSongIndex++;
+      this.currentSong = this.playlist.songs[this.currentSongIndex];
+      this.play();
+    }
+  }
+
+  // Method to stop the current song
+  stop() {
+    this.isPlaying = false;
+    this.currentSongIndex = 0;
+    this.currentSong = this.playlist.songs[this.currentSongIndex];
+    console.log(`Stopped playing ${this.currentSong.title}`);
+  }
+}
+
+// Creating some songs
+const song1 = new Song('Shape of You', 'Ed Sheeran', 'Divide', '3:54', 'https://www.example.com/song1');
+const song2 = new Song('Believer', 'Imagine Dragons', 'Evolve', '3:23', 'https://www.example.com/song2');
+const song3 = new Song('Thunder', 'Imagine Dragons', 'Evolve', '3:07', 'https://www.example.com/song3');
+
+// Creating a playlist
+const playlist1 = new Playlist('My Favorite Songs', [song1, song2, song3]);
+
+// Creating a music player
+const player1 = new MusicPlayer(playlist1);
+
+// Playing the first song in the playlist
+player1.play();
+
+// Skipping to the next song
+player1.next();
+
+// Pausing the current song
+player1.pause();
+
+// Stopping the current song
+player1.stop();
